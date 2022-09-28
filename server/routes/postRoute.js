@@ -3,6 +3,8 @@ const PostContro = require('../controllers/postContro');
 const router = express.Router();
 
 router.get("/",PostContro.getAllPosts);
+router.get("/search/:search",PostContro.searchPost);
+
 router.post('/',PostContro.save);
 router.get('/:id',PostContro.getPostById);
 router.put('/:id',PostContro.updatePost);

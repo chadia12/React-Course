@@ -11,6 +11,17 @@ exports.save = async (req,res) =>{
       }
 }
 
+//SEARCH POST
+exports.searchPost = async (req, res) =>{
+  try{
+    
+const srch = await Post.find({title: {$regex: req.params.search , $options: 'i'}});
+res.json(srch);
+  }catch(err){
+    res.status(500).json(err);
+  }
+}
+
 //GET POST BY ID
 exports.getPostById = async (req, res) =>{
     try {

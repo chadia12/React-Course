@@ -25,11 +25,14 @@ export default function Write() {
       newPost.photo = filename;
       try {
         await axios.post("/upload/", data);
+        console.log(data);
       } catch (err) {}
     }
     try {
       const res = await axios.post("/posts/", newPost);
-      window.location.replace("/post/" + res.data._id);
+       window.location.replace("/post/" + res.data._id);
+      
+      
     } catch (err) {}
   }
 

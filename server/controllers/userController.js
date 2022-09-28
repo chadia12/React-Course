@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const User =require('../models/user');
 
  exports.deleteUser = async(req, res) =>{
-    const result = await User.findByIdAndDelete(req.params.id);
+    const result = await User.updateOne({_id: req.params.id}, req.body);
     res.json(result);
   //  if (req.body.userId === req.params.id) {
   //     try {
@@ -50,7 +50,7 @@ const User =require('../models/user');
  }
 
  exports.getAllUser= async (req, res) =>{
-    const allUser= await User.find();
+    const allUser= await User.find({isDelete:false});
     res.json(allUser)
  }
 

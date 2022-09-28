@@ -19,7 +19,11 @@ const UserSchema = new mongoose.Schema({
       profilePic:{
         type: String,
         default:""
-      }
+      },
+      isDeleted:{
+        type: Boolean,
+        default: false
+      },
 
     },{timestamps:true}
 )

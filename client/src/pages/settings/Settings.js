@@ -45,9 +45,8 @@ console.log(file);
   }
 
   async function handleDelete() {
-    
     try {
-      await axios.delete(`users/${user._id}`,{ userId: user._id } );
+      await axios.put(`users/delete/${user._id}`,{ isDeleted: true } );
       window.location.replace("/");
     } catch (err) {}
   }

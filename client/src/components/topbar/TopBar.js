@@ -1,15 +1,36 @@
 import { Link } from "react-router-dom";
 import "./topbar.css";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Context } from "../../context/Context";
-
-export default function Topbar() {
+import axios from "axios";
+axios.defaults.baseURL ='http://localhost:3002'
+export default function Topbar({posts}) {
   
   const { user, dispatch } = useContext(Context);
+  const [search, setSearch] = useState("");
+  const [searchRes, setSearchRes] = useState([]);
   const PF= "http://localhost:3002/images/"
   function handleLogout(){
 dispatch({type:"LOGOUT"})
   }
+
+
+ 
+
+  function handleSearch(e){
+    setSearch(e.target.value)
+    const filter = posts.data.filter((e)=>{
+     return e.title.toLowerCase().includes(search.toLowerCase())
+    } );
+    if(search === ""){
+      setSearchRes([]);
+    }else{
+      setSearchRes(filter)
+    }
+    
+  }
+
+
   return (
     <div className="top">
       <div className="topLeft">
@@ -33,8 +54,21 @@ dispatch({type:"LOGOUT"})
             </Link>
           </li>
            <li className="topListItem" onClick={handleLogout}>{user && "LOGOUT"}</li>
+           <li ><input className="searchInput " type="search" placeholder="Search" onChange={handleSearch}/>
+           </li>
+           <i className="topSearchIcon fa-solid fa-magnifying-glass"></i>
         </ul>
+        
       </div>
+      {search.length !==0 && <div className="dataResult">
+  { searchRes.map((value, index)=>{
+    return(
+      <Link to={`post/${value._id}`} key= {index} className="dataItem"  >
+        <p>{value.title}</p>
+        </Link>
+    )
+  })}
+</div>}
       <div className="topRight">
         {user ? (
           <Link className="link" to="/settings">
@@ -58,7 +92,7 @@ dispatch({type:"LOGOUT"})
             </li>
           </ul>
         )}
-        <i className="topSearchIcon fas fa-search"></i>
+        <i className="topSearchIcon fa-solid fa-user"></i>
       </div>
     </div>
   );
